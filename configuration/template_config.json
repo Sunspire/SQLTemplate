@@ -1,0 +1,12 @@
+[
+    {
+        "market":"FR",
+        "country":"FR",
+        "btq_of_origin":"ANDORRA, FRANCE, FRENC. POLYNESIA, FRENCH GUIANA , GUADELOUPE, MARTINIQUE, MAYOTTE, MONACO, NOUVELLE CALEDONIE, RÉUNION, ST. BARTHÉLÉMY, ST. MARTIN, ST. PIER. MIQUEL, WALLIS, FUTUNA"
+    },
+    {
+        "market":"UK",
+        "country":"UK",
+        "btq_of_origin":"United Kingdom"
+    }
+]
