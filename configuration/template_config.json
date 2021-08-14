@@ -1,12 +1,18 @@
-[
-    {
-        "market":"FR",
-        "country":"FR",
-        "btq_of_origin":"ANDORRA, FRANCE, FRENC. POLYNESIA, FRENCH GUIANA , GUADELOUPE, MARTINIQUE, MAYOTTE, MONACO, NOUVELLE CALEDONIE, RÉUNION, ST. BARTHÉLÉMY, ST. MARTIN, ST. PIER. MIQUEL, WALLIS, FUTUNA"
+{
+    "FR": {
+        "table_name": "FR_CUSTOMER"
+        ,"btq_of_origin":"ANDORRA, FRANCE, FRENC. POLYNESIA, FRENCH GUIANA , GUADELOUPE, MARTINIQUE, MAYOTTE, MONACO, NOUVELLE CALEDONIE, RÉUNION, ST. BARTHÉLÉMY, ST. MARTIN, ST. PIER. MIQUEL, WALLIS, FUTUNA"
+        ,"central_one_to_many": "FR"
+        ,"external_key": "111"
+        ,"pool_language": "FR"
+        ,"country": "FR"
     },
-    {
-        "market":"UK",
-        "country":"UK",
-        "btq_of_origin":"United Kingdom"
+    "UK": {
+        "table_name": "UK_CUSTOMER"
+        ,"btq_of_origin":"United Kingdom"
+        ,"central_one_to_many": "UK"
+        ,"external_key": "222"
+        ,"pool_language": "UK"
+        ,"country": "UK"
     }
-]
+}
