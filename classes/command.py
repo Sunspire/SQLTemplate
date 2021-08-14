@@ -7,9 +7,9 @@ from classes.command_controller import CommandController
 class Command:
     method: Callable
     description: str
-    name: str
-    
-commands = [
-    Command(CommandController.fr, 'Generate script for FR', 'fr'),
-    Command(CommandController.uk, 'Generate script for UK', 'uk')
-]
+
+
+commands = {
+    'fr': Command(CommandController.fr, 'Generate script for FR'),
+    'uk': Command(CommandController.uk, 'Generate script for UK')
+}
