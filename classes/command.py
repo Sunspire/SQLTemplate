@@ -11,5 +11,6 @@ class Command:
 
 commands = {
     'fr': Command(CommandController.fr, 'Generate script for FR'),
-    'uk': Command(CommandController.uk, 'Generate script for UK')
+    'uk': Command(CommandController.uk, 'Generate script for UK'),
+    'europe': Command(CommandController.generate_europe_script, 'Generate script for Europe')
 }

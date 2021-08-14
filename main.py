@@ -1,6 +1,7 @@
 from termcolor import colored
 from classes.command import commands
 from classes.command_controller import CommandController
+import sys
 
 
 def command_parser(the_command):
@@ -23,6 +24,15 @@ def command_parser(the_command):
     return False
 
 
+def argument_parser(arguments):
+    command_controller = CommandController()
+    try:
+        command_controller.do_command(commands[arguments[1]])
+    except KeyError:
+        print(colored('Unknown argument', 'yellow'))
+    command_controller = CommandController()
+
+
 def main():
     is_exit = False
     while not is_exit:
@@ -31,9 +41,13 @@ def main():
 
 
 if __name__ == '__main__':
-    command_controller = CommandController()
-    print()
-    print()
-    print(colored('<=== SQL Script Generator ===>', 'cyan'))
-    print()
-    main()  
+    if len(sys.argv) <= 1:
+        command_controller = CommandController()
+        print()
+        print()
+        print(colored('<=== SQL Script Generator ===>', 'cyan'))
+        print()
+        main()
+
+    else:
+        argument_parser(sys.argv)
