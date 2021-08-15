@@ -29,7 +29,6 @@ def argument_parser(arguments):
         command_controller.do_command(commands[arguments[1]])
     except KeyError:
         print('Unknown argument')
-    command_controller = CommandController()
 
 
 def main_loop():
