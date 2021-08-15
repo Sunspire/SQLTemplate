@@ -1,0 +1,4 @@
+CASE
+            WHEN _CUSTOMER.AC_RICSC_WRITTENLANGUAGE = 'ES' THEN 'ES'
+            ELSE 'EN'
+        END

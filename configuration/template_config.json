@@ -1,18 +1,74 @@
 {
+    "BESC": {
+        "table_name": "BESC_CUSTOMER"
+        ,"btq_of_origin":"BELGIUM, DENMARK,FAROE ISLANDS, FINLAND, ICELAND, LUXEMBOURG, NETHERLANDS, NORWAY, SVALBARD AND JAN MAYEN, SWEDEN"
+        ,"central_one_to_many": "BESC"
+        ,"external_key": "105"
+        ,"pool_language": "BE"
+        ,"country": "BE"
+    },
+    "CH": {
+        "table_name": "CH_CUSTOMER"
+        ,"btq_of_origin":"LIECHTENSTEIN, SWITZERLAND"
+        ,"central_one_to_many": "CH"
+        ,"external_key": "111"
+        ,"pool_language": "language configuration"
+        ,"country": "CH"
+    },
     "FR": {
         "table_name": "FR_CUSTOMER"
         ,"btq_of_origin":"ANDORRA, FRANCE, FRENC. POLYNESIA, FRENCH GUIANA , GUADELOUPE, MARTINIQUE, MAYOTTE, MONACO, NOUVELLE CALEDONIE, RÉUNION, ST. BARTHÉLÉMY, ST. MARTIN, ST. PIER. MIQUEL, WALLIS, FUTUNA"
         ,"central_one_to_many": "FR"
-        ,"external_key": "111"
+        ,"external_key": "106"
         ,"pool_language": "FR"
         ,"country": "FR"
     },
+    "GR": {
+        "table_name": "GR_CUSTOMER"
+        ,"btq_of_origin":"GREECE"
+        ,"central_one_to_many": "SEE"
+        ,"external_key": "107"
+        ,"pool_language": "language configuration"
+        ,"country": "GR"
+    },
+    "IB": {
+        "table_name": "IB_CUSTOMER"
+        ,"btq_of_origin":"GIBRALTAR, PORTUGAL, SPAIN"
+        ,"central_one_to_many": "IB"
+        ,"external_key": "110"
+        ,"pool_language": "language configuration"
+        ,"country": "ES"
+    },
+    "NEU": {
+        "table_name": "NEU_CUSTOMER"
+        ,"btq_of_origin":"ALBANIA,AUSTRIA,BOSNIA AND HERZEGOVINA,BULGARIA,CROATIA,CZECH REPUBLIC,ESTONIA,GERMANY,HUNGARY,LATVIA,LITHUANIA,MACEDONIA,MOLDOVA,MONTENEGRO,POLAND,ROMANIA,SERBIA,SLOVAKIA,SLOVENIA"
+        ,"central_one_to_many": "NEU"
+        ,"external_key": "109"
+        ,"pool_language": "language configuration"
+        ,"country": "DE"
+    },
+    "SEE": {
+        "table_name": "SEE_CUSTOMER"
+        ,"btq_of_origin":"ITALY"
+        ,"central_one_to_many": "SEE"
+        ,"external_key": "112"
+        ,"pool_language": "language configuration"
+        ,"country": "IT"
+    },
+    "TR": {
+        "table_name": "TR_CUSTOMER"
+        ,"btq_of_origin":"TURKEY"
+        ,"central_one_to_many": "TR"
+        ,"external_key": "108"
+        ,"pool_language": "language configuration"
+        ,"country": "TR"
+    },
     "UK": {
         "table_name": "UK_CUSTOMER"
-        ,"btq_of_origin":"United Kingdom"
+        ,"btq_of_origin":"BRIT.VIRGIN IS., GUERNSEY, IRELAND, ISLE OF MAN, JERSEY, TURKS CAICOS, UNITED KINGDOM"
         ,"central_one_to_many": "UK"
-        ,"external_key": "222"
-        ,"pool_language": "UK"
+        ,"external_key": "93"
+        ,"pool_language": "EN"
         ,"country": "UK"
-    }
+    }    
 }
