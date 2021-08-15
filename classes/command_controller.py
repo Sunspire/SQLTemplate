@@ -1,8 +1,6 @@
 import json
 import os
 
-from termcolor import colored
-
 
 class CommandController:
     def __init__(self):
@@ -34,7 +32,7 @@ class CommandController:
                 placeholder['salutation'] = ''
                 
             except KeyError:
-                print(colored(f'Key: {key} not found', 'red'))
+                print(f'Key: {key} not found')
         
         language_file = f'configuration/language/{key}.txt'
         if os.path.isfile(language_file):
@@ -63,24 +61,24 @@ class CommandController:
 
 
     def generate_europe_script(self):
-        print(colored('Generating script for Europe...', 'yellow'))
+        print('Generating script for Europe...', 'yellow')
         
         self.generate_standard_script(directory_name='Europe', key='FR')
         self.generate_standard_script(directory_name='Europe', key='UK')
 
-        print(colored('Done', 'yellow'))
+        print('Done')
 
 
     def fr(self):
-        print(colored('Generating script for FR...', 'yellow'))
+        print('Generating script for FR ...')
         self.generate_standard_script(directory_name='Europe', key='FR')
-        print(colored('Done', 'yellow'))
+        print('... Done')
 
 
     def uk(self):
-        print(colored('Generating script for UK...', 'yellow'))
+        print('Generating script for UK ...')
         self.generate_standard_script(directory_name='Europe', key='UK')
-        print(colored('Done', 'yellow'))
+        print('... Done')
 
 
     def do_command(self, command):
