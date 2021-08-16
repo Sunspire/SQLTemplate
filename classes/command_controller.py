@@ -48,46 +48,96 @@ class CommandController:
 
         generated_script = self.replace_placeholder(placeholder, template, key)
         
-        file_name_and_path = f'output/{directory_name}/standard_script_{key}.sql'
-        if os.path.isfile(file_name_and_path):
-            os.remove(file_name_and_path)
-
         directory_path = f'output/{directory_name}/'
         if not os.path.isdir(directory_path):
             os.makedirs(directory_path)
+
+        file_name_and_path = f'output/{directory_name}/standard_script_{key}.sql'
+        if os.path.isfile(file_name_and_path):
+            os.remove(file_name_and_path)
 
         with open(f'output/{directory_name}/standard_script_{key}.sql', 'w') as f:
             f.write(generated_script)
 
 
-    def generate_europe_script(self):
+    def generate_script(self, key: str, template_name: str, directory_name: str):
+        pass
+
+
+    def europe(self):
         print('Generating script for Europe ...')
+        print()
         
         self.generate_standard_script(directory_name='Europe', key='BESC')
-        self.generate_standard_script(directory_name='Europe', key='CH')
-        self.generate_standard_script(directory_name='Europe', key='FR')
-        self.generate_standard_script(directory_name='Europe', key='UK')
+        print('BESC done ...')
 
+        self.generate_standard_script(directory_name='Europe', key='CH')
+        print('CH done ...')
+
+        self.generate_standard_script(directory_name='Europe', key='FR')
+        print('FR done ...')
+
+        self.generate_standard_script(directory_name='Europe', key='GR')
+        print('GR done ...')
+
+        self.generate_standard_script(directory_name='Europe', key='IB')
+        print('IB done ...')
+
+        self.generate_standard_script(directory_name='Europe', key='NEU')
+        print('NEU done ...')
+
+        self.generate_standard_script(directory_name='Europe', key='SEE')
+        print('SEE done ...')
+
+        self.generate_standard_script(directory_name='Europe', key='TR')
+        print('TR done ...')
+
+        self.generate_standard_script(directory_name='Europe', key='UK')
+        print('UK done ...')
+
+        print()
         print('... Done')
 
 
     def besc(self):
-        print('Generating script for CH ...')
+        print('Generating script for BESC ...')
         self.generate_standard_script(directory_name='BESC', key='BESC')
         print('... Done')
-
 
     def ch(self):
         print('Generating script for CH ...')
         self.generate_standard_script(directory_name='CH', key='CH')
         print('... Done')
 
-
     def fr(self):
         print('Generating script for FR ...')
         self.generate_standard_script(directory_name='FR', key='FR')
         print('... Done')
 
+    def gr(self):
+        print('Generating script for GR ...')
+        self.generate_standard_script(directory_name='GR', key='GR')
+        print('... Done')
+
+    def ib(self):
+        print('Generating script for IB ...')
+        self.generate_standard_script(directory_name='IB', key='IB')
+        print('... Done')
+
+    def neu(self):
+        print('Generating script for NEU ...')
+        self.generate_standard_script(directory_name='NEU', key='NEU')
+        print('... Done')
+
+    def see(self):
+        print('Generating script for SEE ...')
+        self.generate_standard_script(directory_name='SEE', key='SEE')
+        print('... Done')
+    
+    def tr(self):
+        print('Generating script for TR ...')
+        self.generate_standard_script(directory_name='TR', key='TR')
+        print('... Done')
 
     def uk(self):
         print('Generating script for UK ...')

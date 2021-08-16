@@ -10,8 +10,14 @@ class Command:
 
 
 commands = {
+    'besc': Command(CommandController.besc, 'Generate script for BESC'),
     'ch': Command(CommandController.ch, 'Generate script for CH'),
     'fr': Command(CommandController.fr, 'Generate script for FR'),
+    'gr': Command(CommandController.gr, 'Generate script for GR'),
+    'ib': Command(CommandController.fr, 'Generate script for IB'),
+    'neu': Command(CommandController.fr, 'Generate script for NEU'),
+    'see': Command(CommandController.fr, 'Generate script for SEE'),
+    'tr': Command(CommandController.fr, 'Generate script for TR'),
     'uk': Command(CommandController.uk, 'Generate script for UK'),
-    'europe': Command(CommandController.generate_europe_script, 'Generate script for Europe')
+    'europe': Command(CommandController.europe, 'Generate script for Europe')
 }

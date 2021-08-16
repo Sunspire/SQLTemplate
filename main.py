@@ -1,3 +1,4 @@
+import argparse
 from classes.command import commands
 from classes.command_controller import CommandController
 import sys
@@ -7,13 +8,7 @@ def command_parser(the_command):
     the_command = the_command.strip().lower()
     
     if the_command == 'q':
-        confirm_exit = input('are you sure (y/n)? > ')
-
-        if confirm_exit.strip().lower() == 'y':
-            return True
-
-        print('ok')
-        return False
+        return True
 
     try:
         command_controller.do_command(commands[the_command])
@@ -25,8 +20,9 @@ def command_parser(the_command):
 
 def argument_parser(arguments):
     command_controller = CommandController()
+    #print(arguments.market)
     try:
-        command_controller.do_command(commands[arguments[1]])
+        command_controller.do_command(commands[arguments.market])
     except KeyError:
         print('Unknown argument')
 
@@ -48,4 +44,7 @@ if __name__ == '__main__':
         main_loop()
 
     else:
-        argument_parser(sys.argv)
+        parser = argparse.ArgumentParser()
+        parser.add_argument('-m', '--market', help='specify the market. e.g. FR, Europe')
+        parser.add_argument('-t', '--template', help='specify the template. Standard is the default if no template is given')
+        argument_parser(parser.parse_args())
