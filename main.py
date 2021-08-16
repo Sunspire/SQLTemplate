@@ -11,7 +11,9 @@ def command_parser(the_command):
         return True
 
     try:
-        command_controller.do_command(commands[the_command])
+        first_word_in_command = the_command.split()[0]
+        command_controller.command = the_command
+        command_controller.do_command(commands[first_word_in_command])
     except KeyError:
         print('Unknown command')
     
@@ -19,10 +21,15 @@ def command_parser(the_command):
 
 
 def argument_parser(arguments):
-    command_controller = CommandController()
-    #print(arguments.market)
     try:
-        command_controller.do_command(commands[arguments.market])
+        market = arguments.market
+        template = arguments.template
+        if template is None:
+            template = ''
+            
+        command_controller.command = market + ' ' + template
+        command_controller.template_name = template
+        command_controller.do_command(commands[market])
     except KeyError:
         print('Unknown argument')
 
@@ -35,8 +42,9 @@ def main_loop():
 
 
 if __name__ == '__main__':
-    if len(sys.argv) <= 1:
-        command_controller = CommandController()
+    command_controller = CommandController()
+    command_controller.init()
+    if len(sys.argv) <= 1:        
         print()
         print()
         print('<=== SQL Script Generator ===>')
