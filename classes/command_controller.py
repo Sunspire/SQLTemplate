@@ -15,9 +15,6 @@ class CommandController:
         for key in config:
             self.templates[key] = [str(config[key]['template']), str(config[key]['config'])]
 
-        return
-
-
     def replace_placeholder(self, placeholder = {}, template = '', key = ''):
         generated_script = template
         for key in placeholder:
@@ -34,21 +31,25 @@ class CommandController:
 
         return str(contents)
 
+    def isfile(self, file_name_and_path: str):
+        if os.path.isfile(file_name_and_path):
+            return True
+        
+        print(f'File not found: {file_name_and_path}')
+        return False
+
     def generate_script(self, key: str, template_name: str, directory_name: str):
         if template_name == '':
             template_name = 'standard'
-        try:
-            with open('templates/' + self.templates[template_name][0], 'r') as file_template:
-                template = file_template.read()
-
-        except KeyError:
-            print('Cannot find the template')
-            return
         
+        template_name_and_path = 'templates/' + self.templates[template_name][0]
         config_file = 'configuration/' + self.templates[template_name][1]
-        if not os.path.isfile(config_file):
-            print(f'Config file not found: {config_file}')
+        
+        if not self.isfile(template_name_and_path) or not self.isfile(config_file):
             return
+
+        with open(template_name_and_path, 'r') as file_template:
+            template = file_template.read()
 
         placeholder = {}
         with open(config_file, 'r', encoding='utf-8') as f:
@@ -65,15 +66,13 @@ class CommandController:
             language_file = f'configuration/language/{key}.txt'
             if os.path.isfile(language_file):
                 with open(language_file) as f:
-                    language = f.read()
-                    placeholder['pool_language'] = language
+                    placeholder['pool_language'] = f.read()
 
         if 'salutation' in json_data[key]:
             salutation_file = f'configuration/salutation/{key}.txt'
             if os.path.isfile(salutation_file):
                 with open(salutation_file) as f:
-                    salutation = f.read()
-                    placeholder['salutation'] = salutation
+                    placeholder['salutation'] = f.read()
 
         generated_script = self.replace_placeholder(placeholder, template, key)
         
@@ -130,7 +129,7 @@ class CommandController:
 
     def ch(self):
         print('Generating script for CH ...')
-        self.generate_script(key='BESC', template_name=self.template_name, directory_name='CH')
+        self.generate_script(key='CH', template_name=self.template_name, directory_name='CH')
         print('... Done')
 
     def fr(self):
@@ -140,32 +139,32 @@ class CommandController:
 
     def gr(self):
         print('Generating script for GR ...')
-        self.generate_script(key='BESC', template_name=self.template_name, directory_name='GR')
+        self.generate_script(key='GR', template_name=self.template_name, directory_name='GR')
         print('... Done')
 
     def ib(self):
         print('Generating script for IB ...')
-        self.generate_script(key='BESC', template_name=self.template_name, directory_name='IB')
+        self.generate_script(key='IB', template_name=self.template_name, directory_name='IB')
         print('... Done')
 
     def neu(self):
         print('Generating script for NEU ...')
-        self.generate_script(key='BESC', template_name=self.template_name, directory_name='NEU')
+        self.generate_script(key='NEU', template_name=self.template_name, directory_name='NEU')
         print('... Done')
 
     def see(self):
         print('Generating script for SEE ...')
-        self.generate_script(key='BESC', template_name=self.template_name, directory_name='SEE')
+        self.generate_script(key='SEE', template_name=self.template_name, directory_name='SEE')
         print('... Done')
 
     def tr(self):
         print('Generating script for TR ...')
-        self.generate_script(key='BESC', template_name=self.template_name, directory_name='TR')
+        self.generate_script(key='TR', template_name=self.template_name, directory_name='TR')
         print('... Done')
 
     def uk(self):
         print('Generating script for UK ...')
-        self.generate_script(key='BESC', template_name=self.template_name, directory_name='UK')
+        self.generate_script(key='UK', template_name=self.template_name, directory_name='UK')
         print('... Done')
 
 

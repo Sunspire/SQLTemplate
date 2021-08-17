@@ -28,13 +28,16 @@ def argument_parser(arguments):
         print('Market is missing')
         return
 
-    if not market in commands:
+    if not market.lower() in commands:
         print('Unknown market')
         return
 
     if template is None:
         template = ''
         
+    market = market.lower()
+    template = template.lower()
+
     command_controller.command = market + ' ' + template
     command_controller.template_name = template
     command_controller.do_command(commands[market])
