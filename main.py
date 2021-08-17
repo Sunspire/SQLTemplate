@@ -21,18 +21,23 @@ def command_parser(the_command):
 
 
 def argument_parser(arguments):
-    try:
-        market = arguments.market
-        template = arguments.template
-        if template is None:
-            template = ''
-            
-        command_controller.command = market + ' ' + template
-        command_controller.template_name = template
-        command_controller.do_command(commands[market])
-    except KeyError:
-        print('Unknown argument')
+    market = arguments.market
+    template = arguments.template
 
+    if market is None:
+        print('Market is missing')
+        return
+
+    if not market in commands:
+        print('Unknown market')
+        return
+
+    if template is None:
+        template = ''
+        
+    command_controller.command = market + ' ' + template
+    command_controller.template_name = template
+    command_controller.do_command(commands[market])
 
 def main_loop():
     is_exit = False

@@ -25,7 +25,7 @@ class CommandController:
 
         return generated_script
 
-    def unpack_node(self, node, contents):
+    def format_data(self, node, contents):
         if node == 'btq_of_origin':
             return ', '.join(map(lambda x: "'" + x.strip() + "'", str(contents).split(',')))
 
@@ -55,7 +55,7 @@ class CommandController:
             json_data = json.load(f)
             try:
                 for node in json_data[key]:                    
-                    placeholder[node] = self.unpack_node(node, str(json_data[key][node]))
+                    placeholder[node] = self.format_data(node, str(json_data[key][node]))
                 
             except KeyError:
                 print(f'Key: {key} not found')
