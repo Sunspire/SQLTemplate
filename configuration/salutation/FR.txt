@@ -1,0 +1,31 @@
+CASE
+            WHEN LEN(ISNULL(LTRIM(RTRIM(_CUSTOMER.AC_RICSC_TITLE)), '')) > 0
+                AND LEN(ISNULL(LTRIM(RTRIM(_CUSTOMER.AC_LASTNAME)), '')) > 0
+                AND _CUSTOMER.AC_RICSC_TITLE NOT LIKE '%MISSING%'
+                AND _CUSTOMER.AC_LASTNAME NOT LIKE '%MISSING%'
+                AND _CUSTOMER.AC_RICSC_TITLE NOT IN ('BANK','BIJOUTERIE','BOUTIQUE','CHARITY','COMPANY','HOTEL','NGO','ONCHU','RESTAURANT','UNKNOWN','0051','0050','0047','0053','0003','0048','0054','0136','0049','0004')
+                THEN CASE
+                        WHEN REPLACE(REPLACE(_CUSTOMER.AC_RICSC_TITLE, '.', ''), ' and ', ' & ') IN ('Doctor', 'Dr') AND _CUSTOMER.AC_RICSC_GENDER = 'Male'  THEN CONCAT('Cher Monsieur le Docteur ', LTRIM(RTRIM(_CUSTOMER.AC_LASTNAME)), ',')
+                        WHEN REPLACE(REPLACE(_CUSTOMER.AC_RICSC_TITLE, '.', ''), ' and ', ' & ') IN ('Doctor', 'Dr') AND _CUSTOMER.AC_RICSC_GENDER = 'Female'  THEN CONCAT('Chère Madame la Doctoresse ', LTRIM(RTRIM(_CUSTOMER.AC_LASTNAME)), ',')
+                        WHEN REPLACE(REPLACE(_CUSTOMER.AC_RICSC_TITLE, '.', ''), ' and ', ' & ') IN ('Doctor', 'Dr') THEN CONCAT('Cher Docteur ', LTRIM(RTRIM(_CUSTOMER.AC_LASTNAME)), ',')
+                        WHEN REPLACE(REPLACE(_CUSTOMER.AC_RICSC_TITLE, '.', ''), ' and ', ' & ') IN ('Dr & Mrs', '0075') THEN CONCAT('Chers Monsieur le Docteur & Madame ', LTRIM(RTRIM(_CUSTOMER.AC_LASTNAME)), ',')
+                        WHEN REPLACE(REPLACE(_CUSTOMER.AC_RICSC_TITLE, '.', ''), ' and ', ' & ') IN ('Mr & Dr', '0074', 'Mr & Mrs Dr', 'DR/M') THEN CONCAT('Chers Monsieur & Madame la Doctoresse ', LTRIM(RTRIM(_CUSTOMER.AC_LASTNAME)), ',')
+                        WHEN REPLACE(REPLACE(_CUSTOMER.AC_RICSC_TITLE, '.', ''), ' and ', ' & ') IN ('Exmo Sr Dr', '0128', 'Mr Dr', '0094') THEN CONCAT('Cher Monsieur le Docteur ', LTRIM(RTRIM(_CUSTOMER.AC_LASTNAME)), ',')
+                        WHEN REPLACE(REPLACE(_CUSTOMER.AC_RICSC_TITLE, '.', ''), ' and ', ' & ') IN ('Mr Dr Dr', '0087') THEN CONCAT('Cher Monsieur le Docteur ', LTRIM(RTRIM(_CUSTOMER.AC_LASTNAME)), ',')
+                        WHEN REPLACE(REPLACE(_CUSTOMER.AC_RICSC_TITLE, '.', ''), ' and ', ' & ') IN ('Mr Dr Ing', '0089') THEN CONCAT('Cher Monsieur le Docteur ', LTRIM(RTRIM(_CUSTOMER.AC_LASTNAME)), ',')
+                        WHEN REPLACE(REPLACE(_CUSTOMER.AC_RICSC_TITLE, '.', ''), ' and ', ' & ') IN ('Mr Prof Dr', '0092') THEN CONCAT('Cher Monsieur le Docteur ', LTRIM(RTRIM(_CUSTOMER.AC_LASTNAME)), ',')
+                        WHEN REPLACE(REPLACE(_CUSTOMER.AC_RICSC_TITLE, '.', ''), ' and ', ' & ') IN ('Mr Dr & Mrs Dr', '0088') THEN CONCAT('Chers Monsieur le Docteur & Madame la Doctoresse ', LTRIM(RTRIM(_CUSTOMER.AC_LASTNAME)), ',')
+                        WHEN REPLACE(REPLACE(_CUSTOMER.AC_RICSC_TITLE, '.', ''), ' and ', ' & ') IN ('Exma Sra Dra', '0129', 'Mrs Dr', '0076') THEN CONCAT('Chère Madame la Doctoresse ', LTRIM(RTRIM(_CUSTOMER.AC_LASTNAME)), ',')
+                        WHEN REPLACE(REPLACE(_CUSTOMER.AC_RICSC_TITLE, '.', ''), ' and ', ' & ') IN ('Mrs Prof Dr', '0080') THEN CONCAT('Chère Madame la Doctoresse ', LTRIM(RTRIM(_CUSTOMER.AC_LASTNAME)), ',')
+                        WHEN REPLACE(REPLACE(_CUSTOMER.AC_RICSC_TITLE, '.', ''), ' and ', ' & ') IN ('Mrs Prof Dr & Mrs', '0091') THEN CONCAT('Chère Madame la Doctoresse & Madame ', LTRIM(RTRIM(_CUSTOMER.AC_LASTNAME)), ',')
+                        WHEN REPLACE(REPLACE(_CUSTOMER.AC_RICSC_TITLE, '.', ''), ' and ', ' & ') IN ('Miss', '0001', 'Ms', '0006') THEN CONCAT('Chère Mademoiselle ', LTRIM(RTRIM(_CUSTOMER.AC_LASTNAME)), ',')
+                        WHEN REPLACE(REPLACE(_CUSTOMER.AC_RICSC_TITLE, '.', ''), ' and ', ' & ') IN ('Mr & Mrs', '0007') THEN CONCAT('Chers Monsieur & Madame ', LTRIM(RTRIM(_CUSTOMER.AC_LASTNAME)), ',')
+                        WHEN REPLACE(REPLACE(_CUSTOMER.AC_RICSC_TITLE, '.', ''), ' and ', ' & ') IN ('Mr & Mr', '0009') THEN CONCAT('Chers Messieurs ', LTRIM(RTRIM(_CUSTOMER.AC_LASTNAME)), ',')
+                        WHEN REPLACE(REPLACE(_CUSTOMER.AC_RICSC_TITLE, '.', ''), ' and ', ' & ') IN ('Mrs & Mrs', '0008') THEN CONCAT('Chères Mesdames ', LTRIM(RTRIM(_CUSTOMER.AC_LASTNAME)), ',')
+                        WHEN _CUSTOMER.AC_RICSC_GENDER = 'Male' THEN CONCAT('Cher Monsieur ', LTRIM(RTRIM(_CUSTOMER.AC_LASTNAME)), ',')
+                        WHEN _CUSTOMER.AC_RICSC_GENDER = 'Female' THEN CONCAT('Chère Madame ', LTRIM(RTRIM(_CUSTOMER.AC_LASTNAME)), ',')
+
+                        ELSE 'Cher Monsieur, Chère Madame,'
+                    END
+            ELSE ''
+        END

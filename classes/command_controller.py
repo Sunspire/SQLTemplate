@@ -29,10 +29,10 @@ class CommandController:
         if node == 'btq_of_origin':
             return ', '.join(map(lambda x: "'" + x.strip() + "'", str(contents).split(',')))
 
-        if node in ['pool_language', 'country']:
+        if node in ['pool_language', 'country', 'salutation']:
             return "'" + str(contents) + "'"
 
-        return node
+        return str(contents)
 
     def generate_script(self, key: str, template_name: str, directory_name: str):
         if template_name == '':
@@ -54,7 +54,7 @@ class CommandController:
         with open(config_file, 'r', encoding='utf-8') as f:
             json_data = json.load(f)
             try:
-                for node in json_data[key]:
+                for node in json_data[key]:                    
                     placeholder[node] = self.unpack_node(node, str(json_data[key][node]))
                 
             except KeyError:
@@ -88,95 +88,49 @@ class CommandController:
         with open(f'output/{directory_name}/standard_script_{key}.sql', 'w') as f:
             f.write(generated_script)
 
-
-    def generate_standard_script(self, directory_name: str, key: str):        
-        with open('templates/standard_template.txt', 'r') as file_template:
-            template = file_template.read()
-
-        placeholder = {}
-        with open('configuration/template_config.json', 'r', encoding='utf-8') as f:
-            json_data = json.load(f)
-            try:
-                placeholder['table_name'] = str(json_data[key]['table_name'])
-                placeholder['btq_of_origin'] = ', '.join(map(lambda x: "'" + x.strip() + "'", str(json_data[key]['btq_of_origin']).split(',')))
-                placeholder['central_one_to_many'] = str(json_data[key]['central_one_to_many'])
-                placeholder['external_key'] = str(json_data[key]['external_key'])
-                placeholder['pool_language'] = "'" + str(json_data[key]['pool_language']) + "'"
-                placeholder['country'] = "'" + str(json_data[key]['country']) + "'"
-                placeholder['salutation'] = ''
-                
-            except KeyError:
-                print(f'Key: {key} not found')
-        
-        language_file = f'configuration/language/{key}.txt'
-        if os.path.isfile(language_file):
-            with open(language_file) as f:
-                language = f.read()
-                placeholder['pool_language'] = language
-        
-        salutation_file = f'configuration/salutation/{key}.txt'
-        if os.path.isfile(salutation_file):
-            with open(salutation_file) as f:
-                salutation = f.read()
-                placeholder['salutation'] = salutation
-
-        generated_script = self.replace_placeholder(placeholder, template, key)
-        
-        directory_path = f'output/{directory_name}/'
-        if not os.path.isdir(directory_path):
-            os.makedirs(directory_path)
-
-        file_name_and_path = f'output/{directory_name}/standard_script_{key}.sql'
-        if os.path.isfile(file_name_and_path):
-            os.remove(file_name_and_path)
-
-        with open(f'output/{directory_name}/standard_script_{key}.sql', 'w') as f:
-            f.write(generated_script)
-
-
     def europe(self):
+        directory = 'Europe'
         print('Generating script for Europe ...')
         print()
         
-        self.generate_standard_script(directory_name='Europe', key='BESC')
+        self.generate_script(key='BESC', template_name=self.template_name, directory_name=directory)
         print('BESC done ...')
 
-        self.generate_standard_script(directory_name='Europe', key='CH')
+        self.generate_script(key='CH', template_name=self.template_name, directory_name=directory)
         print('CH done ...')
 
-        self.generate_standard_script(directory_name='Europe', key='FR')
+        self.generate_script(key='FR', template_name=self.template_name, directory_name=directory)
         print('FR done ...')
 
-        self.generate_standard_script(directory_name='Europe', key='GR')
+        self.generate_script(key='GR', template_name=self.template_name, directory_name=directory)
         print('GR done ...')
 
-        self.generate_standard_script(directory_name='Europe', key='IB')
+        self.generate_script(key='IB', template_name=self.template_name, directory_name=directory)
         print('IB done ...')
 
-        self.generate_standard_script(directory_name='Europe', key='NEU')
+        self.generate_script(key='NEU', template_name=self.template_name, directory_name=directory)
         print('NEU done ...')
 
-        self.generate_standard_script(directory_name='Europe', key='SEE')
+        self.generate_script(key='SEE', template_name=self.template_name, directory_name=directory)
         print('SEE done ...')
 
-        self.generate_standard_script(directory_name='Europe', key='TR')
+        self.generate_script(key='TR', template_name=self.template_name, directory_name=directory)
         print('TR done ...')
 
-        self.generate_standard_script(directory_name='Europe', key='UK')
+        self.generate_script(key='UK', template_name=self.template_name, directory_name=directory)
         print('UK done ...')
 
         print()
         print('... Done')
 
-
     def besc(self):
         print('Generating script for BESC ...')
-        self.generate_standard_script(directory_name='BESC', key='BESC')
+        self.generate_script(key='BESC', template_name=self.template_name, directory_name='BESC')
         print('... Done')
 
     def ch(self):
         print('Generating script for CH ...')
-        self.generate_standard_script(directory_name='CH', key='CH')
+        self.generate_script(key='BESC', template_name=self.template_name, directory_name='CH')
         print('... Done')
 
     def fr(self):
@@ -186,32 +140,32 @@ class CommandController:
 
     def gr(self):
         print('Generating script for GR ...')
-        self.generate_standard_script(directory_name='GR', key='GR')
+        self.generate_script(key='BESC', template_name=self.template_name, directory_name='GR')
         print('... Done')
 
     def ib(self):
         print('Generating script for IB ...')
-        self.generate_standard_script(directory_name='IB', key='IB')
+        self.generate_script(key='BESC', template_name=self.template_name, directory_name='IB')
         print('... Done')
 
     def neu(self):
         print('Generating script for NEU ...')
-        self.generate_standard_script(directory_name='NEU', key='NEU')
+        self.generate_script(key='BESC', template_name=self.template_name, directory_name='NEU')
         print('... Done')
 
     def see(self):
         print('Generating script for SEE ...')
-        self.generate_standard_script(directory_name='SEE', key='SEE')
+        self.generate_script(key='BESC', template_name=self.template_name, directory_name='SEE')
         print('... Done')
-    
+
     def tr(self):
         print('Generating script for TR ...')
-        self.generate_standard_script(directory_name='TR', key='TR')
+        self.generate_script(key='BESC', template_name=self.template_name, directory_name='TR')
         print('... Done')
 
     def uk(self):
         print('Generating script for UK ...')
-        self.generate_standard_script(directory_name='UK', key='UK')
+        self.generate_script(key='BESC', template_name=self.template_name, directory_name='UK')
         print('... Done')
 
 
