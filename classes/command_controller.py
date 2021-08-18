@@ -51,17 +51,18 @@ class CommandController:
         with open(template_name_and_path, 'r') as file_template:
             template = file_template.read()
 
-        placeholder = {}
         with open(config_file, 'r', encoding='utf-8') as f:
             json_data = json.load(f)
-            try:
-                for node in json_data[key]:                    
-                    placeholder[node] = self.format_data(node, str(json_data[key][node]))
-                
-            except KeyError:
-                print(f'Key: {key} not found')
-                return
+        
+        placeholder = {}
+        try:
+            for node in json_data[key]:                    
+                placeholder[node] = self.format_data(node, str(json_data[key][node]))
             
+        except KeyError:
+            print(f'Key: {key} not found')
+            return
+        
         if 'pool_language' in json_data[key]:
             language_file = f'configuration/language/{key}.txt'
             if os.path.isfile(language_file):
@@ -84,7 +85,7 @@ class CommandController:
         if os.path.isfile(file_name_and_path):
             os.remove(file_name_and_path)
 
-        with open(f'output/{directory_name}/standard_script_{key}.sql', 'w') as f:
+        with open(file_name_and_path, 'w') as f:
             f.write(generated_script)
 
     def europe(self):
