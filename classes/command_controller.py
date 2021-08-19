@@ -7,6 +7,7 @@ class CommandController:
         self.command = ''
         self.templates = {}
         self.template_name = ''
+        self.script_name = ''
 
     def init(self):
         with open('configuration/template_config.json', 'r') as f:
@@ -41,6 +42,9 @@ class CommandController:
     def generate_script(self, key: str, template_name: str, directory_name: str):
         if template_name == '':
             template_name = 'standard'
+        
+        if self.script_name == '':
+            self.script_name = 'standard_script'
         
         template_name_and_path = 'templates/' + self.templates[template_name][0]
         config_file = 'configuration/' + self.templates[template_name][1]
@@ -94,7 +98,7 @@ class CommandController:
         if not os.path.isdir(directory_path):
             os.makedirs(directory_path)
 
-        file_name_and_path = f'output/{directory_name}/standard_script_{key}.sql'
+        file_name_and_path = f'output/{directory_name}/{self.script_name}_{key}.sql'
         if os.path.isfile(file_name_and_path):
             os.remove(file_name_and_path)
 
