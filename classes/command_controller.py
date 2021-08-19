@@ -55,6 +55,8 @@ class CommandController:
             json_data = json.load(f)
         
         placeholder = {}
+        placeholder['custom_join'] = ''
+        placeholder['custom_condition'] = ''
         try:
             for node in json_data[key]:                    
                 placeholder[node] = self.format_data(node, str(json_data[key][node]))
@@ -74,6 +76,17 @@ class CommandController:
             if os.path.isfile(salutation_file):
                 with open(salutation_file) as f:
                     placeholder['salutation'] = f.read()
+
+        # Look for custom scripts and apply them if found
+        CUSTOM_JOIN_FILE = 'custom/custom_join.txt'
+        if os.path.isfile(CUSTOM_JOIN_FILE):
+            with open(CUSTOM_JOIN_FILE) as f:
+                placeholder['custom_join'] = f.read()
+        
+        CUSTOM_CONDITION_FILE = 'custom/custom_condition.txt'
+        if os.path.isfile(CUSTOM_CONDITION_FILE):
+            with open(CUSTOM_CONDITION_FILE) as f:
+                    placeholder['custom_condition'] = f.read()
 
         generated_script = self.replace_placeholder(placeholder, template, key)
         
