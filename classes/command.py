@@ -17,5 +17,6 @@ commands = {
     'see': Command(CommandController.see),
     'tr': Command(CommandController.tr),
     'uk': Command(CommandController.uk),
-    'europe': Command(CommandController.europe)
+    'europe': Command(CommandController.europe),
+    'autoconfig': Command(CommandController.auto_config)
 }

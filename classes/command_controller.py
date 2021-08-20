@@ -1,6 +1,6 @@
 import json
 import os
-import traceback
+from functions.general import replace_placeholder, format_data, isfile, verify_directory
 
 
 class CommandController:
@@ -23,53 +23,11 @@ class CommandController:
             return self.globals[key]
         return ''
 
-    def replace_placeholder(self, placeholder = {}, template = '', key = ''):
-        generated_script = template
-        for key in placeholder:
-           generated_script = generated_script.replace(f'##{key}##', placeholder[key])
-
-        return generated_script
-
-    def format_data(self, node, contents):
-        if node == 'btq_of_origin':
-            return ', '.join(map(lambda x: "'" + x.strip() + "'", str(contents).split(',')))
-
-        if node in ['pool_language', 'country', 'salutation']:
-            return "'" + str(contents) + "'"
-
-        return str(contents)
-
-    def isfile(self, file_name_and_path: str):
-        if os.path.isfile(file_name_and_path):
-            return True
-        
-        print(f'File not found: {file_name_and_path}')
-        return False
-
-    def verify_directory(self, directory_path: str):
-        if directory_path is None:
-            return os.path.abspath('Output')
-
-        if os.path.isdir(directory_path):
-            return os.path.abspath(directory_path)
-
-        try:
-            if not os.path.isdir(directory_path):
-                os.makedirs(directory_path)
-                print(f'Created output directory {os.path.abspath(directory_path)}')
-                return os.path.abspath(directory_path)
-        except Exception:
-            print(f'Cannot create directory {directory_path}')
-            print('Generating file(s) in the default directory')
-            traceback.print_exc()
-            return os.path.abspath('Output')
-
-        return os.path.abspath('Output')
 
     def generate_script(self, key: str, directory_name: str):
         template_name = self.get_global('template')
         file_name = self.get_global('file_name')
-        output_directory = self.verify_directory(self.get_global('output_directory'))
+        output_directory = verify_directory(self.get_global('output_directory'))
 
         if template_name == '':
             template_name = 'standard'
@@ -80,7 +38,7 @@ class CommandController:
         template_name_and_path = 'templates/' + self.templates[template_name][0]
         config_file = 'configuration/' + self.templates[template_name][1]
         
-        if not self.isfile(template_name_and_path) or not self.isfile(config_file):
+        if not isfile(template_name_and_path) or not isfile(config_file):
             return
 
         with open(template_name_and_path, 'r') as file_template:
@@ -94,7 +52,7 @@ class CommandController:
         placeholder['custom_condition'] = ''
         try:
             for node in json_data[key]:                    
-                placeholder[node] = self.format_data(node, str(json_data[key][node]))
+                placeholder[node] = format_data(node, str(json_data[key][node]))
             
         except KeyError:
             print(f'Key: {key} not found')
@@ -123,7 +81,7 @@ class CommandController:
             with open(CUSTOM_CONDITION_FILE) as f:
                     placeholder['custom_condition'] = f.read()
 
-        generated_script = self.replace_placeholder(placeholder, template, key)
+        generated_script = replace_placeholder(placeholder, template, key)
         
         directory_path = f'{output_directory}\\{directory_name}\\'
         if not os.path.isdir(directory_path):
@@ -135,6 +93,25 @@ class CommandController:
 
         with open(file_name_and_path, 'w') as f:
             f.write(generated_script)
+
+    def auto_config(self):
+        auto_config_file = 'custom/auto_config.json'
+        if not isfile(auto_config_file):
+            print('auto config file not found')
+            return
+        
+        with open(auto_config_file, 'r') as f:
+            config = json.load(f)
+        
+        self.set_global('template', config['template'])
+
+        print('Generating scripts from auto config ...')
+        for market in config['market'].split(','):
+            the_market = market.strip().upper()
+            self.generate_script(key=the_market, directory_name='autoconfig')
+            print(f'{the_market} done ...')
+
+        print('... done')
 
     def europe(self):
         directory = 'Europe'
