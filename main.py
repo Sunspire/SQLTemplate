@@ -23,7 +23,7 @@ def command_parser(the_command):
 def argument_parser(arguments):
     market = arguments.market
     template = arguments.template
-    script_name = arguments.scriptname
+    file_name = arguments.filename
 
     if market is None:
         print('Market is missing')
@@ -34,17 +34,18 @@ def argument_parser(arguments):
         return
 
     if template is None:
-        template = ''
-    if script_name is None:
-        script_name = ''
+        template = 'standard'
+
+    if file_name is None:
+        file_name = ''
+
 
     market = market.lower()
-    template = template.lower()
-    script_name = script_name.lower()
     
-    command_controller.script_name = script_name
-    command_controller.command = market + ' ' + template
-    command_controller.template_name = template
+    command_controller.set_global('market', market)
+    command_controller.set_global('template', template.lower())
+    command_controller.set_global('file_name', file_name)
+    
     command_controller.do_command(commands[market])
 
 def main_loop():
@@ -68,5 +69,6 @@ if __name__ == '__main__':
         parser = argparse.ArgumentParser()
         parser.add_argument('-m', '--market', help='specify the market. e.g. FR, Europe')
         parser.add_argument('-t', '--template', help='specify the template. Standard is the default if no template is given')
-        parser.add_argument('-sn', '--scriptname', help='name of output script')
+        parser.add_argument('-fn', '--filename', help='name of output file')
+        parser.add_argument('-o', '--outputdirectory', help='name of output directory')
         argument_parser(parser.parse_args())
