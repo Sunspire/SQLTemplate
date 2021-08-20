@@ -1,5 +1,6 @@
 import json
 import os
+import traceback
 
 
 class CommandController:
@@ -45,9 +46,30 @@ class CommandController:
         print(f'File not found: {file_name_and_path}')
         return False
 
+    def verify_directory(self, directory_path: str):
+        if directory_path is None:
+            return os.path.abspath('Output')
+
+        if os.path.isdir(directory_path):
+            return os.path.abspath(directory_path)
+
+        try:
+            if not os.path.isdir(directory_path):
+                os.makedirs(directory_path)
+                print(f'Created output directory {os.path.abspath(directory_path)}')
+                return os.path.abspath(directory_path)
+        except Exception:
+            print(f'Cannot create directory {directory_path}')
+            print('Generating file(s) in the default directory')
+            traceback.print_exc()
+            return os.path.abspath('Output')
+
+        return os.path.abspath('Output')
+
     def generate_script(self, key: str, directory_name: str):
         template_name = self.get_global('template')
         file_name = self.get_global('file_name')
+        output_directory = self.verify_directory(self.get_global('output_directory'))
 
         if template_name == '':
             template_name = 'standard'
@@ -103,11 +125,11 @@ class CommandController:
 
         generated_script = self.replace_placeholder(placeholder, template, key)
         
-        directory_path = f'output/{directory_name}/'
+        directory_path = f'{output_directory}\\{directory_name}\\'
         if not os.path.isdir(directory_path):
             os.makedirs(directory_path)
 
-        file_name_and_path = f'output/{directory_name}/{file_name}_{key}.sql'
+        file_name_and_path = f'{output_directory}\\{directory_name}\\{file_name}_{key}.sql'
         if os.path.isfile(file_name_and_path):
             os.remove(file_name_and_path)
 
@@ -116,7 +138,7 @@ class CommandController:
 
     def europe(self):
         directory = 'Europe'
-        print('Generating script for Europe ...')
+        print('Generating scripts for Europe ...')
         print()
         
         self.generate_script(key='BESC', directory_name=directory)

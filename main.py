@@ -45,6 +45,7 @@ def argument_parser(arguments):
     command_controller.set_global('market', market)
     command_controller.set_global('template', template.lower())
     command_controller.set_global('file_name', file_name)
+    command_controller.set_global('output_directory', arguments.outputdirectory)
     
     command_controller.do_command(commands[market])
 
