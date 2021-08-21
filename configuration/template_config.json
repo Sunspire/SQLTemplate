@@ -3,12 +3,8 @@
         "template":"standard_template.txt",
         "config":"standard_config.json"
     },
-    "openers":{
-        "template":"openers_template.txt",
-        "config":"openers_config.json"
-    },
-    "clickers":{
-        "template":"clickers_template.txt",
-        "config":"clickers_config.json"
+    "base":{
+        "template":"base_template.txt",
+        "config":"base_config.json"
     }
 }

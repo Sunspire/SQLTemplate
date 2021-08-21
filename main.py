@@ -21,10 +21,14 @@ def command_parser(the_command):
 
 
 def argument_parser(arguments):
+    autoconfig = arguments.autoconfig
+    if autoconfig is not None:
+        command_controller.do_command(commands['autoconfig'])
+        return
+        
     market = arguments.market
     template = arguments.template
     file_name = arguments.filename
-    autoconfig = arguments.autoconfig
 
     if market is None and autoconfig is None:
         print('Market is missing')
@@ -47,11 +51,7 @@ def argument_parser(arguments):
     command_controller.set_global('template', template.lower())
     command_controller.set_global('file_name', file_name)
     command_controller.set_global('output_directory', arguments.outputdirectory)
-    
-    if autoconfig is not None:
-        command_controller.do_command(commands['autoconfig'])
-    else:
-        command_controller.do_command(commands[market])
+    command_controller.do_command(commands[market])
 
 def main_loop():
     is_exit = False
@@ -75,6 +75,6 @@ if __name__ == '__main__':
         parser.add_argument('-m', '--market', help='specify the market. e.g. FR, Europe')
         parser.add_argument('-t', '--template', help='specify the template. Standard is the default if no template is given')
         parser.add_argument('-fn', '--filename', help='name of output file')
-        parser.add_argument('-o', '--outputdirectory', help='name of output directory (no spaces allowed)')
+        parser.add_argument('-o', '--outputdirectory', help='absolute path of output directory (no spaces allowed)')
         parser.add_argument('-auto', '--autoconfig', help='generates scripts from auto config file')
         argument_parser(parser.parse_args())

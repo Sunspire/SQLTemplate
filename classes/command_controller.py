@@ -6,7 +6,14 @@ from functions.general import replace_placeholder, format_data, isfile, verify_d
 class CommandController:
     def __init__(self):
         self.templates = {}
-        self.globals = {}
+        self.globals = {
+            'market':'',
+            'template':'',
+            'file_name':'',
+            'output_directory':'',
+            'custom_join':'',
+            'custom_condition':''
+        }
 
     def init(self):
         with open('configuration/template_config.json', 'r') as f:
@@ -71,16 +78,21 @@ class CommandController:
                     placeholder['salutation'] = f.read()
 
         # Look for custom scripts and apply them if found
-        CUSTOM_JOIN_FILE = 'custom/custom_join.txt'
-        if os.path.isfile(CUSTOM_JOIN_FILE):
-            with open(CUSTOM_JOIN_FILE) as f:
-                placeholder['custom_join'] = f.read()
+        custom_join_file = self.get_global('custom_join')
+        if custom_join_file == '':
+            custom_join_file = 'custom/custom_join.txt'
         
-        CUSTOM_CONDITION_FILE = 'custom/custom_condition.txt'
-        if os.path.isfile(CUSTOM_CONDITION_FILE):
-            with open(CUSTOM_CONDITION_FILE) as f:
-                    placeholder['custom_condition'] = f.read()
+        if os.path.isfile(custom_join_file):
+            with open(custom_join_file) as f:
+                placeholder['custom_join'] = f.read()
 
+        custom_condition_file = 'custom/' + self.get_global('custom_condition')
+        if custom_condition_file == '' or custom_condition_file == 'custom/':
+            custom_condition_file = 'custom/custom_condition.txt'
+        
+        if os.path.isfile(custom_condition_file):
+            with open(custom_condition_file) as f:
+                    placeholder['custom_condition'] = f.read()
         generated_script = replace_placeholder(placeholder, template, key)
         
         directory_path = f'{output_directory}\\{directory_name}\\'
@@ -93,25 +105,30 @@ class CommandController:
 
         with open(file_name_and_path, 'w') as f:
             f.write(generated_script)
+        print(f'Script generated in {os.path.abspath(directory_path)}')
 
     def auto_config(self):
-        auto_config_file = 'custom/auto_config.json'
-        if not isfile(auto_config_file):
-            print('auto config file not found')
-            return
-        
-        with open(auto_config_file, 'r') as f:
-            config = json.load(f)
-        
-        self.set_global('template', config['template'])
+        files = os.listdir('custom/auto/')
 
-        print('Generating scripts from auto config ...')
-        for market in config['market'].split(','):
-            the_market = market.strip().upper()
-            self.generate_script(key=the_market, directory_name='autoconfig')
-            print(f'{the_market} done ...')
+        for file in files:
+            config_file = 'custom/auto/' + file
+            with open(config_file, 'r') as f:
+                config_file_contents = json.load(f)
 
-        print('... done')
+            for node in config_file_contents:
+                self.set_global('template', node['template'])
+                self.set_global('output_directory', node['output_directory'])
+                self.set_global('file_name', node['file_name'])
+                self.set_global('custom_join', node['custom_join'])
+                self.set_global('custom_condition', node['custom_condition'])
+                
+                print('Generating scripts from auto config ...')
+                for market in node['market'].split(','):
+                    the_market = market.strip().upper()
+                    self.generate_script(key=the_market, directory_name='autoconfig')
+                    print(f'{the_market} done ...')
+
+        print('... Complete')
 
     def europe(self):
         directory = 'Europe'

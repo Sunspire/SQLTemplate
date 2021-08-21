@@ -1,0 +1,18 @@
+[
+    {
+        "market":"see, tr, gr",
+        "template": "base",
+        "output_directory": "",
+        "file_name": "SEE_Group_",
+        "custom_join":"",
+        "custom_condition":"see_group_condition.txt"
+    },
+    {
+        "market":"fr, uk, ch",
+        "template": "standard",
+        "output_directory": "",
+        "file_name": "Other_Group_",
+        "custom_join":"",
+        "custom_condition":""
+    }
+]
