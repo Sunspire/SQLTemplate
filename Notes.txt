@@ -1,0 +1,8 @@
+Virtual Environment
+Step 1: Go to your root directory of existing python project
+
+Step 2: Create virtual environment with virtualenv venv
+
+Step 4: Go to /Scripts and type this command activate
+
+then if you would like to install all required library , pip3 install -r requirements.txt
