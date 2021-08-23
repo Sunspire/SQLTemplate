@@ -79,5 +79,33 @@
         ,"pool_language": "EN"
         ,"country": "UK"
         ,"salutation": ""
-    }    
+    },
+    "IND": {
+        "table_name": "IN_CUSTOMER"
+        ,"btq_of_origin":"IN"
+        ,"central_one_to_many": "IN"
+        ,"external_key": ""
+        ,"pool_language": "EN"
+        ,"country": "IN"
+        ,"salutation": ""
+    }
+    ,
+    "UAE": {
+        "table_name": "UAE_CUSTOMER"
+        ,"btq_of_origin":"Utd.Arab Emir."
+        ,"central_one_to_many": "UAE"
+        ,"external_key": ""
+        ,"pool_language": ""
+        ,"country": "UAE"
+        ,"salutation": ""
+    },
+    "KSA": {
+        "table_name": "KSA_CUSTOMER"
+        ,"btq_of_origin":"Saudi Arabia"
+        ,"central_one_to_many": "KSA"
+        ,"external_key": ""
+        ,"pool_language": ""
+        ,"country": "UAE"
+        ,"salutation": ""
+    }
 }

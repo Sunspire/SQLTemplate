@@ -13,7 +13,7 @@ def format_data(node, contents):
     if node == 'btq_of_origin':
         return ', '.join(map(lambda x: "'" + x.strip() + "'", str(contents).split(',')))
 
-    if node in ['pool_language', 'country', 'salutation']:
+    if node in ['pool_language', 'country', 'salutation', 'external_key']:
         return "'" + str(contents) + "'"
 
     return str(contents)

@@ -130,6 +130,23 @@ class CommandController:
 
         print('... Complete')
 
+    def meia(self):
+        directory = 'MEIA'
+        print('Generating scripts for MEIA ...')
+        print()
+
+        self.generate_script(key='UAE', directory_name=directory)
+        print('UAE done ...')
+
+        self.generate_script(key='KSA', directory_name=directory)
+        print('KSA done ...')
+
+        self.generate_script(key='IND', directory_name=directory)
+        print('IND done ...')
+
+        print()
+        print('... Complete')
+
     def europe(self):
         directory = 'Europe'
         print('Generating scripts for Europe ...')
@@ -163,7 +180,7 @@ class CommandController:
         print('UK done ...')
 
         print()
-        print('... Done')
+        print('... Complete')
 
     def besc(self):
         print('Generating script for BESC ...')
@@ -210,6 +227,20 @@ class CommandController:
         self.generate_script(key='UK', directory_name='UK')
         print('... Done')
 
+    def uae(self):
+        print('Generating script for UAE ...')
+        self.generate_script(key='UAE', directory_name='UAE')
+        print('... Done')
+    
+    def ksa(self):
+        print('Generating script for KSA ...')
+        self.generate_script(key='KSA', directory_name='KSA')
+        print('... Done')
+
+    def ind(self):
+        print('Generating script for IN ...')
+        self.generate_script(key='IND', directory_name='IND')
+        print('... Done')
 
     def do_command(self, command):
         command_method = getattr(self, command.method.__name__)

@@ -1,17 +1,9 @@
 [
     {
-        "market":"see, tr, gr",
+        "market":"fr, uae, ksa, ind",
         "template": "base",
         "output_directory": "",
-        "file_name": "SEE_Group_",
-        "custom_join":"",
-        "custom_condition":"see_group_condition.txt"
-    },
-    {
-        "market":"fr, uk, ch",
-        "template": "standard",
-        "output_directory": "",
-        "file_name": "Other_Group_",
+        "file_name": "MEIA_Group",
         "custom_join":"",
         "custom_condition":""
     }

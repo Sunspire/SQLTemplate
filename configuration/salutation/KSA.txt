@@ -1,0 +1,14 @@
+CASE
+            WHEN _CUSTOMER.AC_RICSC_WRITTENLANGUAGE = 'AR' 
+                        AND LEN(_CUSTOMER.AC_FIRSTNAME) > 0 
+                        AND LEN(_CUSTOMER.AC_LASTNAME) > 0 
+                        AND _CUSTOMER.AC_RICSC_GENDER = 'Male' THEN CONCAT('المحترم', ' ' , 'السيد', _CUSTOMER.AC_FIRSTNAME, ' ', _CUSTOMER.AC_LASTNAME, ',')
+            WHEN _CUSTOMER.AC_RICSC_WRITTENLANGUAGE = 'AR' 
+                        AND LEN(_CUSTOMER.AC_FIRSTNAME) > 0 
+                        AND LEN(_CUSTOMER.AC_LASTNAME) > 0 
+                        AND _CUSTOMER.AC_RICSC_GENDER = 'Female' THEN CONCAT('المحترمة', ' ','السيدة', _CUSTOMER.AC_FIRSTNAME, ' ', _CUSTOMER.AC_LASTNAME, ',')
+            WHEN _CUSTOMER.AC_RICSC_WRITTENLANGUAGE IS NULL OR _CUSTOMER.AC_RICSC_WRITTENLANGUAGE <> 'AR' 
+                        AND LEN(_CUSTOMER.AC_FIRSTNAME) > 0 
+                        AND LEN(_CUSTOMER.AC_LASTNAME) > 0 THEN CONCAT('Dear ', _CUSTOMER.AC_FIRSTNAME, ' ', _CUSTOMER.AC_LASTNAME, ',')
+            ELSE NULL
+        END
